@@ -5,6 +5,11 @@
 function routes(server) {
     server.options('*', INFRA.allow_header.all);
 
+    server.get('*', INFRA.subdomain);
+    server.post('*', INFRA.subdomain);
+    server.put('*', INFRA.subdomain);
+    server.del('*', INFRA.subdomain);
+
     server.get('/', function (req, res) {
         res.send(INFRA.rd.success());
     });

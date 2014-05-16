@@ -62,7 +62,13 @@ function validation(body, res, cb) {
             return;
         }
 
-        DB.collection('route').findOne({'route': body.route}, function (err, data) {
+        var query = {
+            'route': body.route,
+            'subdomain': body.subdomain,
+            'type': body.type
+        };
+
+        DB.collection('route').findOne(query, function (err, data) {
             if (INFRA.err(err, res)) {
                 return;
             }
