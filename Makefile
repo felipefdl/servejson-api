@@ -5,7 +5,7 @@ JSLINT_EXEC = ./node_modules/jslint/bin/jslint.js
 # Configurations
 MOCHA_REPORTER = spec
 
-test: jslint test-u test-i
+test: jslint
 
 jslint:
 	@echo "\n---| JSLint |---"
