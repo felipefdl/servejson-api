@@ -1,21 +1,26 @@
 {
   "name": "servejson-api",
+  "private": true,
   "version": "0.0.1",
-  "description": "servejson-api =============",
+  "description": "Servejson api",
+  "author": "Koshoo",
+  "license": "MIT",
   "main": "index.js",
+  "homepage": "https://github.com/koshoo/servejson-api",
+  "engines": {
+    "node": ">=0.10.3 <0.12"
+  },
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/koshoo/servejson-api.git"
   },
-  "author": "Koshoo",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/koshoo/servejson-api/issues"
   },
-  "homepage": "https://github.com/koshoo/servejson-api",
   "dependencies": {
     "body-parser": "^1.0.2",
     "express": "^4.1.1",
