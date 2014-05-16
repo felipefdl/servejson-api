@@ -4,7 +4,7 @@
 
 var v = require('validator');
 
-function validation(body, cb) {
+function validation(body, res, cb) {
     var errors = [];
 
     if (!v.isEmail(body.mail)) {
@@ -53,7 +53,7 @@ function validation(body, cb) {
 function create(req, res) {
     var body = req.body;
 
-    validation(body, function (errors) {
+    validation(body, res, function (errors) {
         if (errors.length > 0) {
             res.send(INFRA.rd.error(errors));
             return;

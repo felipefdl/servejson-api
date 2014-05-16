@@ -1,5 +1,6 @@
-/*jslint node:true*/
+/*jslint node:true, unparam:true, nomen:true, stupid:true*/
 'use strict';
+
 var yaml       = require('js-yaml');
 var fs         = require('fs');
 var path       = require('path');

@@ -6,9 +6,9 @@ exports.account = {
 };
 exports.route = {
     'create': require('./route.create.js'),
-    'get': require('./route.get.js'),
-}
+    'get': require('./route.get.js')
+};
 
 exports.docs = {
     'errors': require('./docs.errors.js')
-}
+};

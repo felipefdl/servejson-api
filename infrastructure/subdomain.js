@@ -1,4 +1,5 @@
 /*jslint node: true*/
+/*globals INFRA, DB*/
 'use strict';
 
 var reserved_subdomain = ['localhost:3001', 'servejson.com', 'api'];

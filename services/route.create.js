@@ -10,7 +10,7 @@ function validation(body, res, cb) {
 
     // Null errors
     if (!body.json) {
-        errors.push(1008)
+        errors.push(1008);
         cb(errors);
         return;
     }
@@ -38,7 +38,7 @@ function validation(body, res, cb) {
     try {
         JSON.parse(body.json);
     } catch (e) {
-        errors.push(1008)
+        errors.push(1008);
         cb(errors);
         return;
     }
