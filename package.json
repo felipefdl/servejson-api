@@ -26,6 +26,7 @@
     "express": "^4.1.1",
     "js-yaml": "^3.0.2",
     "mongodb": "^1.4.3",
+    "newrelic": "^1.5.5",
     "validator": "^3.11.0"
   },
   "devDependencies": {

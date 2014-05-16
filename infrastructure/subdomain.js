@@ -2,7 +2,7 @@
 /*globals INFRA, DB*/
 'use strict';
 
-var reserved_subdomain = ['localhost:3001', 'servejson.com', 'api'];
+var reserved_subdomain = ['localhost:3001', 'servejson.com', 'api', 'www'];
 
 module.exports = function (req, res, next) {
     var subdomain, url, query;

@@ -4,5 +4,5 @@
 module.exports = function () {
     require('./environment.js')();
     require('./mongo.js')();
-    //require('./newrelic.js')();
+    require('./newrelic.js')();
 };
