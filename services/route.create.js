@@ -1,9 +1,8 @@
 /*jslint node:true*/
-/*globals DB, INFRA*/
+/*globals DB, INFRA, CONFIG*/
 'use strict';
 
-var v     = require('validator');
-var types = ['get', 'post', 'put', 'delete'];
+var v = require('validator');
 
 function validation(body, res, cb) {
     var errors = [];
@@ -27,9 +26,16 @@ function validation(body, res, cb) {
         return;
     }
 
-    // Type error
-    if (types.indexOf(body.type) === -1) {
+    // Type allowed
+    if (CONFIG.types_allowed.indexOf(body.type) === -1) {
         errors.push(1011);
+        cb(errors);
+        return;
+    }
+
+    // Sub-domain reserved
+    if (CONFIG.reserved_subdomain.indexOf(body.subdomain) !== -1) {
+        errors.push(1013);
         cb(errors);
         return;
     }
@@ -74,7 +80,7 @@ function validation(body, res, cb) {
             }
 
             if (data) {
-                errors.push(1009);
+                errors.push(1012);
             }
 
             cb(errors);

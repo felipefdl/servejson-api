@@ -8,7 +8,9 @@ var configs = {
     "allow_origin"          : env.ALLOW_ORIGIN          || '*',
     "connString_mongo"      : env.DB_MONGO              || 'mongodb://localhost/servejson',
     "connString_mongo_test" : env.DB_MONGO_TEST         || 'mongodb://localhost/servejson-test',
-    "newrelic"              : env.NEWRELIC              || false
+    "newrelic"              : env.NEWRELIC              || false,
+    "types_allowed"         : ['get', 'post', 'put', 'delete'],
+    "reserved_subdomain"    : ['localhost:3001', 'servejson.com', 'api', 'www']
 };
 
 // Config to test in Wercker

@@ -1,8 +1,6 @@
 /*jslint node: true*/
-/*globals INFRA, DB*/
+/*globals INFRA, DB, CONFIG*/
 'use strict';
-
-var reserved_subdomain = ['localhost:3001', 'servejson.com', 'api', 'www'];
 
 module.exports = function (req, res, next) {
     var subdomain, url, query;
@@ -10,7 +8,7 @@ module.exports = function (req, res, next) {
     subdomain = req.headers.host.split('.')[0];
     url = req.url;
 
-    if (reserved_subdomain.indexOf(subdomain) !== -1) {
+    if (CONFIG.reserved_subdomain.indexOf(subdomain) !== -1) {
         next();
         return;
     }
