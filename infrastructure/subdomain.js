@@ -6,7 +6,6 @@ module.exports = function (req, res, next) {
     var subdomain, url, route;
 
     subdomain = req.headers.host.split('.')[0];
-    url = req.url;
 
     if (CONFIG.reserved_subdomain.indexOf(subdomain) !== -1) {
         next();
@@ -15,7 +14,7 @@ module.exports = function (req, res, next) {
 
     route = {
         'subdomain' : subdomain,
-        'route'     : url,
+        'route'     : req.url,
         'type'      : req.method
     };
 
@@ -29,6 +28,6 @@ module.exports = function (req, res, next) {
             return;
         }
 
-        res.send(result.json);
+        res.send(result);
     });
 };

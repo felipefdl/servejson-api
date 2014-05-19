@@ -47,7 +47,7 @@ function get_all(params, callback) {
 function get_route(route, callback) {
     var query = {
         'subdomain' : route.subdomain,
-        'route'     : INFRA.remove_slash(route.url),
+        'route'     : INFRA.remove_slash(route.route),
         'type'      : route.type.toLowerCase()
     };
 
@@ -62,7 +62,7 @@ function get_route(route, callback) {
             return;
         }
 
-        callback(result.json);
+        callback(null, result.json);
     });
 }
 
