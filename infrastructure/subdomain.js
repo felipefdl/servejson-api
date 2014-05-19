@@ -3,7 +3,7 @@
 'use strict';
 
 module.exports = function (req, res, next) {
-    var subdomain, url, route;
+    var subdomain, route;
 
     subdomain = req.headers.host.split('.')[0];
 
