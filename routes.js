@@ -1,6 +1,8 @@
 /*jslint node:true, unparam:true*/
-/*globals INFRA, SERVICES*/
+/*globals INFRA*/
 'use strict';
+
+var ctrl = require('./controllers/');
 
 function routes(server) {
     server.options('*', INFRA.allow_header.all);
@@ -14,12 +16,10 @@ function routes(server) {
         res.send(INFRA.rd.success());
     });
 
-    server.get('/docs/errors', INFRA.allow_header.get, SERVICES.docs.errors.list);
+    server.get('/docs/errors', INFRA.allow_header.get, ctrl.system.errors_list);
 
-    // server.post('/account/create', SERVICES.account.create);
-
-    server.post('/route/create', INFRA.allow_header.post, SERVICES.route.create);
-    server.get('/route/get_all/:skip?/:limit?', INFRA.allow_header.get, SERVICES.route.get.get_all);
+    server.post('/route/create', INFRA.allow_header.post, ctrl.routes.create_new_route);
+    server.get('/route/get_all/:skip?/:limit?', INFRA.allow_header.get, ctrl.routes.get_all);
 }
 
 module.exports = routes;

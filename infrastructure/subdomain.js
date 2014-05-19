@@ -1,9 +1,9 @@
 /*jslint node: true*/
-/*globals INFRA, DB, CONFIG*/
+/*globals INFRA, SERVICES, CONFIG*/
 'use strict';
 
 module.exports = function (req, res, next) {
-    var subdomain, url, query;
+    var subdomain, url, route;
 
     subdomain = req.headers.host.split('.')[0];
     url = req.url;
@@ -13,13 +13,13 @@ module.exports = function (req, res, next) {
         return;
     }
 
-    query = {
-        'subdomain': subdomain,
-        'route'    : INFRA.remove_slash(url),
-        'type'     : req.method.toLowerCase()
+    route = {
+        'subdomain' : subdomain,
+        'route'     : url,
+        'type'      : req.method
     };
 
-    DB.collection('route').findOne(query, function (err, result) {
+    SERVICES.route.get.get_route(route, function (err, result) {
         if (INFRA.err(err, res)) {
             return;
         }

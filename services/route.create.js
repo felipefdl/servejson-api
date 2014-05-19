@@ -4,37 +4,37 @@
 
 var v = require('validator');
 
-function validation(body, res, cb) {
+function validation(routeobj, cb) {
     var errors = [];
 
     // Null errors
-    if (!body.json) {
+    if (!routeobj.json) {
         errors.push(1008);
         cb(errors);
         return;
     }
 
-    if (!body.route) {
+    if (!routeobj.route) {
         errors.push(1009);
         cb(errors);
         return;
     }
 
-    if (!body.subdomain) {
+    if (!routeobj.subdomain) {
         errors.push(1010);
         cb(errors);
         return;
     }
 
     // Type allowed
-    if (CONFIG.types_allowed.indexOf(body.type) === -1) {
+    if (CONFIG.types_allowed.indexOf(routeobj.type) === -1) {
         errors.push(1011);
         cb(errors);
         return;
     }
 
     // Sub-domain reserved
-    if (CONFIG.reserved_subdomain.indexOf(body.subdomain) !== -1) {
+    if (CONFIG.reserved_subdomain.indexOf(routeobj.subdomain) !== -1) {
         errors.push(1013);
         cb(errors);
         return;
@@ -42,7 +42,7 @@ function validation(body, res, cb) {
 
     // JSON error
     try {
-        JSON.parse(body.json);
+        JSON.parse(routeobj.json);
     } catch (e) {
         errors.push(1008);
         cb(errors);
@@ -50,15 +50,17 @@ function validation(body, res, cb) {
     }
 
     // Routes error
-    if (body.route.length === 0) {
+    if (routeobj.route.length === 0) {
         errors.push(1009);
         cb(errors);
         return;
     }
 
     // Database error
-    DB.collection('subdomain').findOne({'subdomain': body.subdomain}, function (err, data) {
-        if (INFRA.err(err, res)) {
+    DB.collection('subdomain').findOne({'subdomain': routeobj.subdomain}, function (err, data) {
+        if (err) {
+            errors.push(3003);
+            cb(errors);
             return;
         }
 
@@ -69,13 +71,15 @@ function validation(body, res, cb) {
         }
 
         var query = {
-            'route': body.route,
-            'subdomain': body.subdomain,
-            'type': body.type
+            'route': routeobj.route,
+            'subdomain': routeobj.subdomain,
+            'type': routeobj.type
         };
 
         DB.collection('route').findOne(query, function (err, data) {
-            if (INFRA.err(err, res)) {
+            if (err) {
+                errors.push(3003);
+                cb(errors);
                 return;
             }
 
@@ -88,30 +92,38 @@ function validation(body, res, cb) {
     });
 }
 
-function create(req, res) {
-    var body = req.body;
-    body.route = INFRA.remove_slash(body.route);
+/* routeobj: Input object (example)
+    {
+        "type"     : String,
+        "route"    : String,
+        "subdomain": String,
+        "json"     : JSON.stringify
+    }
+*/
+function create(routeobj, callback) {
+    routeobj.route = INFRA.remove_slash(routeobj.route);
 
-    validation(body, res, function (errors) {
+    validation(routeobj, function (errors) {
         if (errors.length > 0) {
-            res.send(INFRA.rd.error(errors));
+            callback(errors);
             return;
         }
 
         var route = {
-            'subdomain': body.subdomain,
-            'type' : body.type,
-            'route': body.route,
-            'json' : body.json,
+            'subdomain': routeobj.subdomain,
+            'type' : routeobj.type,
+            'route': routeobj.route,
+            'json' : routeobj.json,
             'created_at': new Date()
         };
 
         DB.collection('route').insert(route, function (err) {
-            if (INFRA.err(err, res)) {
+            if (err) {
+                callback([3003]);
                 return;
             }
 
-            res.send(INFRA.rd.success());
+            callback(null, true);
         });
     });
 }
