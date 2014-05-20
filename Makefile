@@ -5,7 +5,7 @@ JSLINT_EXEC = ./node_modules/jslint/bin/jslint.js
 # Configurations
 MOCHA_REPORTER = spec
 
-test: jslint
+test: jslint test-u test-i
 
 jslint:
 	@echo "\n---| JSLint |---"
@@ -14,16 +14,18 @@ jslint:
 
 test-u:
 	@echo "\n---| Mocha (Unit) |---"
-	@NODE_ENV=test $(MOCHA_EXEC) \
+	@NODE_ENV="TEST" $(MOCHA_EXEC) \
 	--reporter $(MOCHA_REPORTER) \
 	--ui tdd \
-	test/unit/**/*.js
+	--recursive \
+	test/unit/
 
 test-i:
 	@echo "\n---| Mocha (Integration) |---"
-	@NODE_ENV=test $(MOCHA_EXEC) \
+	@NODE_ENV="TEST" $(MOCHA_EXEC) \
 	--reporter $(MOCHA_REPORTER) \
 	--ui tdd \
-	test/integration/**/*.js
+	--recursive \
+	test/integration/
 
 .PHONY: test jslint test-u test-i

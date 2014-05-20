@@ -13,6 +13,12 @@ var configs = {
     "reserved_subdomain"    : ['localhost:3001', 'servejson.com', 'api', 'www']
 };
 
+
+// Set configs in test
+if (env.NODE_ENV === 'TEST') {
+    configs.connString_mongo = configs.connString_mongo_test;
+}
+
 // Config to test in Wercker
 if (process.env.WERCKER_MONGODB_HOST) {
     var model, connectionString;
