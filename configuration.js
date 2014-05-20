@@ -20,12 +20,8 @@ if (env.NODE_ENV === 'TEST') {
 }
 
 // Config to test in Wercker
-if (process.env.WERCKER_MONGODB_HOST) {
-    var model, connectionString;
-
-    model = 'mongodb://%s:%s/servejson-test';
-    connectionString = format(model, env.WERCKER_MONGODB_HOST, env.WERCKER_MONGODB_PORT);
-    configs.connString_mongo_test = connectionString;
+if (process.env.WERCKER_MONGODB_URL) {
+    configs.connString_mongo = format('%s/servejson-test', env.WERCKER_MONGODB_URL);
 }
 
 module.exports = configs;
