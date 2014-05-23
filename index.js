@@ -12,7 +12,6 @@ require('./bootstrap/')();
 // Express Config
 var app = express();
 app.set('port', CONFIG.port);
-app.disable('x-powered-by');
 app.use(bodyParser());
 
 // Routes Config
