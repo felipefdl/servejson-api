@@ -3,9 +3,7 @@ MOCHA_EXEC  = ./node_modules/.bin/mocha
 MOCHA__EXEC = ./node_modules/mocha/bin/_mocha
 JSLINT_EXEC = ./node_modules/jslint/bin/jslint.js
 ISTANBUL_EXEC = ./node_modules/istanbul/lib/cli.js
-
-# Configurations
-MOCHA_REPORTER = spec
+COVERALLS_EXEC = ./node_modules/coveralls/bin/coveralls.js
 
 test: jslint test-u test-i
 
@@ -17,7 +15,7 @@ jslint:
 test-u:
 	@echo "\n---| Mocha (Unit) |---"
 	@NODE_ENV="TEST" $(MOCHA_EXEC) \
-	--reporter $(MOCHA_REPORTER) \
+	--reporter spec \
 	--ui tdd \
 	--recursive \
 	test/unit/
@@ -25,7 +23,7 @@ test-u:
 test-i:
 	@echo "\n---| Mocha (Integration) |---"
 	@NODE_ENV="TEST" $(MOCHA_EXEC) \
-	--reporter $(MOCHA_REPORTER) \
+	--reporter spec \
 	--ui tdd \
 	--recursive \
 	test/integration/
@@ -33,9 +31,18 @@ test-i:
 coverage:
 	@echo "\n---| Test Coverage |---"
 	@NODE_ENV="TEST" $(ISTANBUL_EXEC) \
-	cover $(MOCHA__EXEC) -- \
+	cover $(MOCHA__EXEC) --report html -- \
 	--reporter dot \
 	--ui tdd \
 	--recursive test
 
-.PHONY: test jslint test-u test-i coverage
+coveralls:
+	@echo "\n---| Test Coverage to Coveralls |---"
+	@NODE_ENV="TEST" $(ISTANBUL_EXEC) \
+	cover $(MOCHA__EXEC) --report lcovonly -- \
+	--reporter dot \
+	--ui tdd \
+	--recursive test \
+	&& cat ./coverage/lcov.info | $(COVERALLS_EXEC)
+
+.PHONY: test jslint test-u test-i coverage coveralls

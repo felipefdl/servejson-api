@@ -10,6 +10,14 @@ build:
             name: build
             code: npm test
         - script:
+            name: set coveralls token
+            code: |-
+                echo service_name: wercker > .coveralls.yml
+                echo repo_token: $COVERALLS_TOKEN >> .coveralls.yml
+        - script:
+            name: send to reports to coveralls
+            code: make coveralls
+        - script:
             name: environment info
             code: |-
                 echo "node version: $(node -v)"
