@@ -12,6 +12,7 @@
   },
   "scripts": {
     "test": "make test",
+    "test-cov": "make coverage",
     "start": "node index.js"
   },
   "repository": {
