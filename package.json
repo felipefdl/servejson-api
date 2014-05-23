@@ -7,6 +7,12 @@
   "license": "MIT",
   "main": "index.js",
   "homepage": "https://github.com/koshoo/servejson-api",
+  "contributors": [
+    {
+      "name": "Felipe F. Lima",
+      "email": "felipe@ferreiradelima.com"
+    }
+  ],
   "engines": {
     "node": ">=0.10.3 <0.12"
   },

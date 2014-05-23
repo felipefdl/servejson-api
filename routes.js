@@ -10,7 +10,7 @@ function routes(server) {
     server.get('*', INFRA.subdomain);
     server.post('*', INFRA.subdomain);
     server.put('*', INFRA.subdomain);
-    server.del('*', INFRA.subdomain);
+    server.delete('*', INFRA.subdomain);
 
     server.get('/', function (req, res) {
         res.send(INFRA.rd.success());
