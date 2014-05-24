@@ -2,6 +2,7 @@
 'use strict';
 
 function error(code) {
+    code = code || 1;
     var obj = {
         "status": false,
         "code": code

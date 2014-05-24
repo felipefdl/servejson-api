@@ -49,13 +49,6 @@ function validation(routeobj, cb) {
         return;
     }
 
-    // Routes error
-    if (routeobj.route.length === 0) {
-        errors.push(1009);
-        cb(errors);
-        return;
-    }
-
     // Database error
     DB.collection('subdomain').findOne({'subdomain': routeobj.subdomain}, function (err, data) {
         if (err) {

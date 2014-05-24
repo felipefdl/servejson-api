@@ -79,6 +79,15 @@ suite('Routes', function () {
                     done();
                 });
             });
+
+            test('With limit > 30', function (done) {
+                var params = {"limit": 60};
+                SERVICES.route.get.get_all(params, function (err, result) {
+                    assert.ok(!err);
+                    assert.ok(result.length >= 3);
+                    done();
+                });
+            });
         });
     });
 
@@ -159,6 +168,72 @@ suite('Routes', function () {
 
                 SERVICES.route.create(objinput, function (err) {
                     assert.equal(err[0], 1008);
+                    done();
+                });
+            });
+
+            test('JSON null', function (done) {
+                var objinput = {
+                    "type"      : "get",
+                    "route"     : "/teste",
+                    "subdomain" : "test"
+                };
+
+                SERVICES.route.create(objinput, function (err) {
+                    assert.equal(err[0], 1008);
+                    done();
+                });
+            });
+
+            test('Route null', function (done) {
+                var objinput = {
+                    "type"      : "get",
+                    "subdomain" : "test",
+                    "json"      : JSON.stringify({"test": 123})
+                };
+
+                SERVICES.route.create(objinput, function (err) {
+                    assert.equal(err[0], 1009);
+                    done();
+                });
+            });
+
+            test('Subdomain null', function (done) {
+                var objinput = {
+                    "type"      : "get",
+                    "route"     : "/teste",
+                    "json"      : JSON.stringify({"test": 123})
+                };
+
+                SERVICES.route.create(objinput, function (err) {
+                    assert.equal(err[0], 1010);
+                    done();
+                });
+            });
+
+            test('Type null', function (done) {
+                var objinput = {
+                    "route"     : "/teste",
+                    "subdomain" : "test",
+                    "json"      : JSON.stringify({"test": 123})
+                };
+
+                SERVICES.route.create(objinput, function (err) {
+                    assert.equal(err[0], 1011);
+                    done();
+                });
+            });
+
+            test('Subdomain Reserved', function (done) {
+                var objinput = {
+                    "type"      : "get",
+                    "route"     : "/test",
+                    "subdomain" : "api",
+                    "json"      : JSON.stringify({"test": 123})
+                };
+
+                SERVICES.route.create(objinput, function (err) {
+                    assert.equal(err[0], 1013);
                     done();
                 });
             });

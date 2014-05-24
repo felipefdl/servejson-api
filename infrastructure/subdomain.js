@@ -19,7 +19,8 @@ module.exports = function (req, res, next) {
     };
 
     SERVICES.route.get.get_route(route, function (err, result) {
-        if (INFRA.err(err, res)) {
+        if (err) {
+            res.send(INFRA.rd.error([3003]));
             return;
         }
 
