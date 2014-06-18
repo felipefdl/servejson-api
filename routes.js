@@ -16,10 +16,10 @@ function routes(server) {
         res.send(INFRA.rd.success());
     });
 
-    server.get('/docs/errors', INFRA.allow_header.get, ctrl.system.errors_list);
+    server.get('/docs/errors', ctrl.system.errors_list);
 
-    server.post('/route/create', INFRA.allow_header.post, ctrl.routes.create_new_route);
-    server.get('/route/get_all/:skip?/:limit?', INFRA.allow_header.get, ctrl.routes.get_all);
+    server.post('/route/create', ctrl.routes.create_new_route);
+    server.get('/route/get_all/:skip?/:limit?', ctrl.routes.get_all);
 }
 
 module.exports = routes;

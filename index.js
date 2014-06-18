@@ -1,5 +1,5 @@
 /*jslint node:true*/
-/*globals CONFIG*/
+/*globals CONFIG, INFRA*/
 'use strict';
 
 var bodyParser = require('body-parser');
@@ -13,6 +13,7 @@ require('./bootstrap/')();
 var app = express();
 app.set('port', CONFIG.port);
 app.use(bodyParser());
+app.use(INFRA.allow_header.all);
 
 // Routes Config
 require('./routes.js')(app);
