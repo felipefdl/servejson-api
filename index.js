@@ -12,7 +12,8 @@ require('./bootstrap/')();
 // Express Config
 var app = express();
 app.set('port', CONFIG.port);
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ "extended": true }));
+app.use(bodyParser.json());
 app.use(INFRA.allow_header.all);
 
 // Routes Config
